@@ -1,4 +1,3 @@
-
 class Book {
     constructor(title, author) {
         this.title = title;
@@ -12,6 +11,11 @@ class Book {
 }
 
 class Display {
+
+    constructor() {
+        this.bookList = JSON.parse(localStorage.getItem('bookList')) || [];
+        this.updateUI();
+    }
     book = new Book();
     add(book) {
         let uiString = `<tr>
@@ -20,7 +24,10 @@ class Display {
                             <td>${book.isBorrowed ? 'Borrowed' : 'Available'}</td>
                             <td class="borrow"><button onClick="Borrow(event)"> ${book.isBorrowed ? 'Return' : 'Borrow/Return'} </button></td> 
                         </tr>`;
+                  
         bookList.innerHTML += uiString;
+        this.bookList.push(book);
+        this.updateLocalStorage();
     };
     clear() {
         addBookForm.reset();
@@ -33,6 +40,21 @@ class Display {
             return true;
         }
     }   
+    updateLocalStorage() {
+        localStorage.setItem('bookList', JSON.stringify(this.bookList));
+    }
+    updateUI() {
+        this.bookList.forEach(book => {
+            let uiString = `<tr>
+                                <td>${book.title}</td>
+                                <td>${book.author}</td>
+                                <td>${book.isBorrowed ? 'Borrowed' : 'Available'}</td>
+                                <td class="borrow"><button onClick="Borrow(event)"> ${book.isBorrowed ? 'Return' : 'Borrow/Return'} </button></td> 
+                            </tr>`;
+            bookList.innerHTML += uiString;
+        });
+    }
+
 }
 
 
@@ -41,6 +63,17 @@ function Borrow(event) {
         const statusCell = row.querySelector('td:nth-child(3)');
         statusCell.textContent = statusCell.textContent === 'Available' ? 'Borrowed' : 'Available';
         alert(`Book status changed to ${statusCell.textContent}`);
+
+        const title = row.querySelector('td:nth-child(1)').textContent;
+    const author = row.querySelector('td:nth-child(2)').textContent;
+    const bookList = JSON.parse(localStorage.getItem('bookList')) || [];
+    const updatedBookList = bookList.map(book => {
+        if (book.title === title && book.author === author) {
+            book.isBorrowed = !book.isBorrowed;
+        }
+        return book;
+    });
+    localStorage.setItem('bookList', JSON.stringify(updatedBookList));
     }
 
 
@@ -79,7 +112,6 @@ function searchBook() {
                 return;
             }
         }
-
         alert("Not Present.");
     } else {
         alert("Please enter a title to search.");
