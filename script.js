@@ -1,43 +1,17 @@
 
-// function Borrow(book){
 
-//       if (book) {
-//         if (book.isBorrowed) {
-//           alert('The book has been borrowed.');
-//         } else {
-//           book.isBorrowed = true;
-//           alert('The book is available.');
-//         }
-//       } else {
-//         alert('The book does not exist in the library.');
-//       }
-//     }
+function Borrow(event) {
+    const row = event.target.closest('tr');
 
-function Availability(book) {
+    const statusCell = row.querySelector('td:nth-child(4)');
 
-    if (book) {
-        if (book.isBorrowed) {
-            book.isBorrowed = false;
-            alert('The book has been returned. It is now available.');
-        } else {
-            book.isBorrowed = true;
-            alert('The book is available.');
-        }
-    } else {
-        alert('The book does not exist in the library.');
-    }
+    statusCell.textContent = statusCell.textContent === 'Available' ? 'Borrowed' : 'Borrowed';
 
-}
+    alert(`Book status changed to ${statusCell.textContent}`);
 
-// function Borrow(event) {
-//     const row = event.target.closest('tr');
+    
+}   
 
-//     const statusCell = row.querySelector('td:nth-child(4)');
-
-//     statusCell.textContent = statusCell.textContent === 'Available' ? 'Borrowed' : 'Available';
-
-//     alert(`Book status changed to ${statusCell.textContent}`);
-// }   
 class Book {
     constructor(title, author) {
         this.title = title;
@@ -52,17 +26,14 @@ class Book {
 class Display {
     book = new Book();
     add(book) {
-
-        
-
         let uiString = `<tr>
                           
                             <td>${book.title}</td>
                             <td>${book.author}</td>
                             <td>${book.isBorrowed ? 'Borrowed' : 'Available'}</td>
-                            <td>${book.isBorrowed ? 'Return' : 'Borrow'}
-                </button>
-            </td>`;
+                            <td><button> ${book.isBorrowed ? 'Return' : 'Borrow'} </button></td>
+                            
+                        </tr>`;
         bookList.innerHTML += uiString;
     };
     clear() {
