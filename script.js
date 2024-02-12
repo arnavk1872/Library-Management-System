@@ -49,7 +49,7 @@ class Display {
                                 <td>${book.title}</td>
                                 <td>${book.author}</td>
                                 <td>${book.isBorrowed ? 'Borrowed' : 'Available'}</td>
-                                <td class="borrow"><button onClick="Borrow(event)"> ${book.isBorrowed ? 'Return' : 'Borrow/Return'} </button></td> 
+                                <td class="borrow"><button class="borrow" onClick="Borrow(event)"> ${book.isBorrowed ? 'Return' : 'Borrow/Return'} </button></td> 
                             </tr>`;
             bookList.innerHTML += uiString;
         });
@@ -80,13 +80,14 @@ function Borrow(event) {
 let addBookForm = document.querySelector("#addBookForm");
 addBookForm.addEventListener("submit", addBookFormSubmit);
 
+let display = new Display();
 function addBookFormSubmit() {
 
     let title = document.getElementById("bookTitle").value;
     let author = document.getElementById("bookAuthor").value;
     let book = new Book(title, author);
 
-    let display = new Display();
+
 
     if (display.validate(book)) {
         display.add(book);
