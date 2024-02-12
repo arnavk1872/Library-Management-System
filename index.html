@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <script defer src="script.js"></script>
+    
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Library Management System</h1>
+    </header>
+
+    <section>
+        <form id="addBookForm">
+            <label for="bookTitle">Book Title</label>
+            <input type="text" id="bookTitle" required>
+
+            <label for="bookAuthor">Author</label>
+            <input type="text" id="bookAuthor" required>
+
+            <button type="button" onclick="addBookFormSubmit()">Add</button>
+        </form>
+
+        <hr>
+
+        <form id="searchBookForm">
+            <label for="searchTitle">Search by Title</label>
+            <input type="text" id="searchTitle">
+
+            <button type="button" onclick="searchBook()">Search</button>
+        </form>
+
+        <hr>
+
+        <h2>Available Books</h2>
+        <table id="bookTable">
+            <thead>
+                <tr>
+                
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Status</th>
+                    <th>Options</th>
+                </tr>
+            </thead>
+            <tbody id="bookList">
+                <tr>
+                    
+                    <td>C++</td>
+                    <td>Josh Lobspinoso</td>
+                    <td>Available</td>
+                    <td class="borrow"><button class="borrow" onclick="toggleBorrowStatus(index)">Borrow/Return</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</body>
+</html>
